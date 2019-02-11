@@ -34,9 +34,9 @@ supervisorctl update
 supervisorctl restart recommender_api
 
 # Setup nginx to make our application accessible.
-cp $PROJECT_BASE_PATH/recommender-api/deploy/nginx_profiles_api.conf /etc/nginx/sites-available/recommender_api.conf
+cp $PROJECT_BASE_PATH/recommender-api/deploy/nginx_recommender_api.conf /etc/nginx/sites-available/recommender_api.conf
 rm /etc/nginx/sites-enabled/default
-ln -s /etc/nginx/sites-available/profiles_api.conf /etc/nginx/sites-enabled/recommender_api.conf
+ln -s /etc/nginx/sites-available/recommender_api.conf /etc/nginx/sites-enabled/recommender_api.conf
 systemctl restart nginx.service
 
 echo "DONE! :)"
