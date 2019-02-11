@@ -26,7 +26,7 @@ SECRET_KEY = 'w#j_^m88kyb+ssq59!0%-isu26ag5shtq%p3o=wm6%1a)^pxhm'
 DEBUG = True
 
 ALLOWED_HOSTS = ['ec2-54-93-86-132.eu-central-1.compute.amazonaws.com','127.0.0.1',
-'ec2-18-185-35-186.eu-central-1.compute.amazonaws.com']
+'ec2-18-196-248-155.eu-central-1.compute.amazonaws.com']
 
 
 # Application definition
