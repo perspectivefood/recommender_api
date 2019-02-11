@@ -17,26 +17,26 @@ apt-get update
 apt-get install -y python3-dev python3-venv sqlite python-pip supervisor nginx git
 
 mkdir -p $PROJECT_BASE_PATH
-git clone $PROJECT_GIT_URL $PROJECT_BASE_PATH/profiles-rest-api
+git clone $PROJECT_GIT_URL $PROJECT_BASE_PATH/recommender-api
 
 mkdir -p $VIRTUALENV_BASE_PATH
-python3 -m venv $VIRTUALENV_BASE_PATH/profiles_api
+python3 -m venv $VIRTUALENV_BASE_PATH/recommender_api
 
-$VIRTUALENV_BASE_PATH/profiles_api/bin/pip install -r $PROJECT_BASE_PATH/profiles-rest-api/requirements.txt
+$VIRTUALENV_BASE_PATH/recommender_api/bin/pip install -r $PROJECT_BASE_PATH/recommender-api/requirements.txt
 
 # Run migrations
-cd $PROJECT_BASE_PATH/profiles-rest-api/src
+cd $PROJECT_BASE_PATH/recommender-api/src
 
 # Setup Supervisor to run our uwsgi process.
-cp $PROJECT_BASE_PATH/profiles-rest-api/deploy/supervisor_profiles_api.conf /etc/supervisor/conf.d/profiles_api.conf
+cp $PROJECT_BASE_PATH/recommender-api/deploy/supervisor_profiles_api.conf /etc/supervisor/conf.d/recommender_api.conf
 supervisorctl reread
 supervisorctl update
-supervisorctl restart profiles_api
+supervisorctl restart recommender_api
 
 # Setup nginx to make our application accessible.
-cp $PROJECT_BASE_PATH/profiles-rest-api/deploy/nginx_profiles_api.conf /etc/nginx/sites-available/profiles_api.conf
+cp $PROJECT_BASE_PATH/recommender-api/deploy/nginx_profiles_api.conf /etc/nginx/sites-available/recommender_api.conf
 rm /etc/nginx/sites-enabled/default
-ln -s /etc/nginx/sites-available/profiles_api.conf /etc/nginx/sites-enabled/profiles_api.conf
+ln -s /etc/nginx/sites-available/profiles_api.conf /etc/nginx/sites-enabled/recommender_api.conf
 systemctl restart nginx.service
 
 echo "DONE! :)"
