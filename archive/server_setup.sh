@@ -28,7 +28,7 @@ $VIRTUALENV_BASE_PATH/recommender_api/bin/pip install -r $PROJECT_BASE_PATH/reco
 cd $PROJECT_BASE_PATH/recommender-api/src
 
 # Setup Supervisor to run our uwsgi process.
-cp $PROJECT_BASE_PATH/recommender-api/deploy/supervisor_profiles_api.conf /etc/supervisor/conf.d/recommender_api.conf
+cp $PROJECT_BASE_PATH/recommender-api/deploy/supervisor_recommender_api.conf /etc/supervisor/conf.d/recommender_api.conf
 supervisorctl reread
 supervisorctl update
 supervisorctl restart recommender_api
