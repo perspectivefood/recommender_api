@@ -70,75 +70,7 @@ class UserProfile(AbstractBaseUser, PermissionsMixin):
 
 
 
-class ProfileFeedItem(models.Model):
-    """Feed for startup data."""
-
-    BUDGET_CHOICES = (
-        ('verysmall', "<10k"),
-        ('small', "10k-50k"),
-        ('medium', "50k-100k"),
-        ('big', "100k-500k"),
-        ('verybig', ">500k"),
-    )
-
-    BUSINESS_FOCUS_CHOICES = (
-            ('B2B', "B2B"),
-            ('B2C', "B2C"),
-        )
-
-    YESNO_CHOICES= (
-            (1, "YES"),
-            (0, "NO"),
-        )
-
-    STATUS_CHOICES= (
-            ("living", "living"),
-            ("survived", "survived"),
-            ("dead", "dead"),
-        )
-
-    INDUSTRY_CHOICES= (
-            ("MedHealthTech", "MedHealthTech"),
-            ('ICT App', 'ICT App'),
-            ('AgriFoodTech', 'AgriFoodTech'),
-            ('FinInsureTech', 'FinInsureTech'),
-            ('HighTech', 'HighTech'),
-            ('AdRetailTech', 'AdRetailTech'),
-            ('CleanGreenTech', 'CleanGreenTech'),
-            ('Consumer Goods', 'Consumer Goods'),
-            ('PropTech', 'PropTech'),
-            ('Consumer Goods', 'Consumer Goods'),
-            ('RegLegalTech', 'RegLegalTech'),
-            ('BioTech', 'BioTech'),
-            ('MobilityTravelTech', 'MobilityTravelTech'),
-            ('Other', 'Other'),
-    )
-
+class FeedMenueplan(models.Model):
     user_profile = models.ForeignKey('UserProfile', on_delete=models.CASCADE)
-    startup_name = models.CharField(max_length=255,null=True, blank=True,)
-    management_experience = models.PositiveIntegerField(null=True, blank=True,validators=[MaxValueValidator(500), MinValueValidator(0)])
-    technical_experience = models.PositiveIntegerField(null=True, blank=True,validators=[MaxValueValidator(500), MinValueValidator(0)])
-    startup_experience = models.PositiveIntegerField(null=True, blank=True,validators=[MaxValueValidator(500), MinValueValidator(0)])
-    founders = models.PositiveIntegerField(null=True, blank=True,validators=[MaxValueValidator(10), MinValueValidator(0)])
-    advisors = models.PositiveIntegerField(null=True, blank=True,validators=[MaxValueValidator(100), MinValueValidator(0)])
-    employees = models.PositiveIntegerField(null=True, blank=True, validators=[MaxValueValidator(500), MinValueValidator(0)])
-    budget = models.CharField(null=True, blank=True, max_length=10,choices=BUDGET_CHOICES,default='verysmall')
-    funding_rounds = models.PositiveIntegerField(null=True, blank=True,validators=[MaxValueValidator(100), MinValueValidator(0)])
-    focus = models.CharField(max_length=10,choices=BUSINESS_FOCUS_CHOICES,default='B2C', null=True, blank=True)
-    founding_date = models.DateField(default="1900-01-01", null=True, blank=True)
-    revenue = models.IntegerField(null=True, blank=True)
-    hightech = models.CharField(max_length=255,choices=YESNO_CHOICES,null=True, blank=True)
-    industry = models.CharField(max_length=255,choices=INDUSTRY_CHOICES,null=True, blank=True)
-    hotspot = models.CharField(max_length=255,choices=YESNO_CHOICES,null=True, blank=True)
-    status = models.CharField(max_length=255,choices=STATUS_CHOICES,null=True, blank=True, default='living')
-    created_on = models.DateTimeField(auto_now_add=True)
-
-#    def get_count_founders(self):
-#        return self.founders.count()
-
-
-    def __str__(self):
-        """return the model as a string. """
-
-        return self.startup_name
-        #return "success"
+    title = models.CharField(max_length=255,default="none")
+    pub_date = models.DateTimeField(auto_now_add=True)
