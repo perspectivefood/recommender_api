@@ -16,16 +16,19 @@ from . import serializers
 from . import models
 from . import permissions
 
-#class TeamComparer(viewsets.ModelViewSet):
-#    http_method_names = ['get']
-#    queryset = models.ProfileFeedMenueplan.objects.all()
-#
-#    serializer_class = serializers.TeamComparerSerializer
-#    permission_classes = (permissions.PostOwnStatus, IsAuthenticated)
-#        authentication_classes = (TokenAuthentication,)
+class Recommender(viewsets.ModelViewSet):
+    http_method_names = ['get']
+    queryset = models.FeedMenueplan.objects.all()
 
-#    def get_queryset(self):
-#        return self.queryset.filter(user_profile=self.request.user).order_by('-created_on')[:1]
+    serializer_class = serializers.RecommenderSerializer
+    permission_classes = (permissions.PostOwnStatus, IsAuthenticated)
+    authentication_classes = (TokenAuthentication,)
+
+    def get_queryset(self):
+        data = self.queryset.filter(user_profile=self.request.user)
+        last_transaction_id = data.order_by("-pub_date").values('transaction_id')[:1]
+        data = data.filter(transaction_id=last_transaction_id[0].get("transaction_id"))
+        return data
 
 
 class UserProfileViewSet(viewsets.ModelViewSet):
@@ -57,18 +60,20 @@ class FeedMenueplanViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.FeedMenueplanSerializer
     permission_classes = (permissions.PostOwnStatus, IsAuthenticated)
 
-    def get_serializer(self, *args, **kwargs):
-        if "data" in kwargs:
-            data = kwargs["data"]
-
-        # check if many is required
-            if isinstance(data, list):
-                kwargs["many"] = True
-            return super(FeedMenueplanViewSet, self).get_serializer(*args, **kwargs)
+    #def get_serializer(self, *args, **kwargs):
+    #    if "data" in kwargs:
+    #        data = kwargs["data"]
+    #
+    #    # check if many is required
+    #        if isinstance(data, list):
+    #            kwargs["many"] = True
+    #        return super(FeedMenueplanViewSet, self).get_serializer(*args, **kwargs)
 
     def perform_create(self, serializer):
         """Sets the user profile to the logged in user."""
         serializer.save(user_profile=self.request.user)
 
     def get_queryset(self):
-        return self.queryset.filter(user_profile=self.request.user).order_by('-created_on')[:1]
+
+        return self.queryset.filter(user_profile=self.request.user).order_by('-pub_date')[:1]
+        #return self.queryset.all(many=True)

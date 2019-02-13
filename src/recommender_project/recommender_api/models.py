@@ -71,6 +71,7 @@ class UserProfile(AbstractBaseUser, PermissionsMixin):
 
 
 class FeedMenueplan(models.Model):
+    transaction_id = models.CharField(max_length=255,default="none")
     user_profile = models.ForeignKey('UserProfile', on_delete=models.CASCADE)
     title = models.CharField(max_length=255,default="none")
     pub_date = models.DateTimeField(auto_now_add=True)

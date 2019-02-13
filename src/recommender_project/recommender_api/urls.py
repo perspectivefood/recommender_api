@@ -9,7 +9,7 @@ router = DefaultRouter()
 router.register('profile', views.UserProfileViewSet)
 router.register('login', views.LoginViewSet, base_name='login')
 router.register('feed', views.FeedMenueplanViewSet)
-#router.register('TeamComparer', views.TeamComparer, base_name='TeamComparer')
+router.register('recommendations', views.Recommender, base_name='Recommender')
 
 urlpatterns = [
     url(r'', include(router.urls)),
