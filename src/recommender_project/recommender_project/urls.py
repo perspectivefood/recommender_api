@@ -20,5 +20,6 @@ from django.contrib import admin
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^api/', include('recommender_api.urls')),
+    url(r'^api/', include('recommender_api.urls_frontend')),
+    url(r'^backend/', include('recommender_api.urls_backend')),
 ]

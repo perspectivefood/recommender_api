@@ -77,3 +77,14 @@ class FeedMenueplanViewSet(viewsets.ModelViewSet):
 
         return self.queryset.filter(user_profile=self.request.user).order_by('-pub_date')[:1]
         #return self.queryset.all(many=True)
+
+
+class UploadSubstitutesViewSet(viewsets.ModelViewSet):
+    authentication_classes = (TokenAuthentication,)
+    queryset = models.UploadSubstitutes.objects.all()
+    serializer_class = serializers.UploadSubstitutesSerializer
+    permission_classes = (permissions.PostOwnStatus, IsAuthenticated)
+
+    def perform_create(self, serializer):
+        """Sets the user profile to the logged in user."""
+        serializer.save(user_profile=self.request.user)

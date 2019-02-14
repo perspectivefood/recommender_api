@@ -69,9 +69,26 @@ class UserProfile(AbstractBaseUser, PermissionsMixin):
         return self.email
 
 
-
 class FeedMenueplan(models.Model):
     transaction_id = models.CharField(max_length=255,default="none")
     user_profile = models.ForeignKey('UserProfile', on_delete=models.CASCADE)
-    title = models.CharField(max_length=255,default="none")
+    date = models.DateField(default="1900-01-01", null=True, blank=True)
+    menueline = models.CharField(max_length=255,default="none",null=True, blank=True)
+    component = models.CharField(max_length=255,default="none",null=True, blank=True)
+    PLU = models.IntegerField(default=0,null=True, blank=True)
+    pub_date = models.DateTimeField(auto_now_add=True)
+
+
+class UploadSubstitutes(models.Model):
+    user_profile = models.ForeignKey('UserProfile', default=None,on_delete=models.CASCADE)
+    PLU = models.CharField(max_length=255,default=None,null=True, blank=True)
+    top1 = models.CharField(max_length=255,default=None,null=True, blank=True)
+    top2 = models.CharField(max_length=255,default=None,null=True, blank=True)
+    top3 = models.CharField(max_length=255,default=None,null=True, blank=True)
+    top4 = models.CharField(max_length=255,default=None,null=True, blank=True)
+    top5 = models.CharField(max_length=255,default=None,null=True, blank=True)
+    top6 = models.CharField(max_length=255,default=None,null=True, blank=True)
+    top7 = models.CharField(max_length=255,default=None,null=True, blank=True)
+    top8 = models.CharField(max_length=255,default=None,null=True, blank=True)
+    top9 = models.CharField(max_length=255,default=None,null=True, blank=True)
     pub_date = models.DateTimeField(auto_now_add=True)

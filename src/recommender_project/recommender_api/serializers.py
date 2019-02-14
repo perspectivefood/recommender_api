@@ -32,23 +32,24 @@ class FeedMenueplanSerializer(serializers.ModelSerializer):
         fields = ('transaction_id',
                     'id',
                     'user_profile',
-                    'title',
+                    'date',
+                    'menueline',
+                    'component',
+                    'PLU',
                     'pub_date')
         extra_kwargs = {'user_profile':{'read_only': True}}
 
 
 class RecommenderSerializer(serializers.ModelSerializer):
-    #recommendations =  serializers.SerializerMethodField()
-    #norm_founders =  serializers.SerializerMethodField()
-
     class Meta:
         model = models.FeedMenueplan
-        fields = (
-        'id',
-        'title'
-        )
-    #def get_recommendations(self, obj):
-    #    #recommendations = obj.title
-    #    recommendations = len(obj.transaction_id)
-    #    return str(recommendations)
-#filter(status='survived#
+        fields = ('date',
+                    'menueline',
+                    'component',
+                    'PLU')
+
+class UploadSubstitutesSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.UploadSubstitutes
+        fields = '__all__'
+        extra_kwargs = {'user_profile':{'read_only': True}}
